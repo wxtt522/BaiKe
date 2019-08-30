@@ -9,7 +9,7 @@ import json
 
 class BaikePipeline(object):
     def __init__(self):
-        self.filename = open('baike.json', 'wb+')
+        self.filename = open('baike_gupiao.json', 'wb+')
 
     def process_item(self, item, spider):
         text = json.dumps(dict(item), ensure_ascii=False) + ",\n"

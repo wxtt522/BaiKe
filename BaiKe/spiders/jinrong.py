@@ -7,7 +7,9 @@ from BaiKe.items import BaikeItem
 class JinrongSpider(scrapy.Spider):
     name = 'jinrong'
     allowed_domains = ['http://baike.baidu.com']
-    start_urls = ['http://baike.baidu.com/fenlei/%E9%87%91%E8%9E%8D']
+    # start_urls = ['http://baike.baidu.com/fenlei/%E9%87%91%E8%9E%8D']  #  金融
+    # start_urls = ['http://baike.baidu.com/fenlei/%E7%BB%8F%E6%B5%8E%E5%AD%A6']  # 经济学
+    start_urls = ['http://baike.baidu.com/fenlei/%E8%82%A1%E7%A5%A8']  # 股票
 
     # 编写爬取方法
     def parse(self, response):
