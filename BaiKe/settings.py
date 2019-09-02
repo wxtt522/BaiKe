@@ -15,6 +15,7 @@ SPIDER_MODULES = ['BaiKe.spiders']
 NEWSPIDER_MODULE = 'BaiKe.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
+# b'User-Agent': [b'Scrapy/1.5.1 (+https://scrapy.org)'],  # 默认请求User-Agent，下面header不生效？
 # USER_AGENT = 'BaiKe (+http://www.yourdomain.com)'
 USER_AGENT = 'Baiduspider'
 

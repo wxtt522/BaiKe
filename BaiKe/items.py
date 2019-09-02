@@ -21,3 +21,4 @@ class BaikeItem(scrapy.Item):
     category_1 = scrapy.Field()
     # 开放分类 二级分类
     category_2 = scrapy.Field()
+    data = scrapy.Field()

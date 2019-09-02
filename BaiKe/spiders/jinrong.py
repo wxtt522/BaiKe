@@ -27,10 +27,34 @@ class JinrongSpider(scrapy.Spider):
                 './/div/a[1]/text()').extract_first()
             item['category_2'] = line.xpath(
                 './/div/a[2]/text()').extract_first()
-            yield item
+            yield scrapy.Request(url="http://baike.baidu.com" + item['entry_href'], meta={'item': item},
+                                 callback=self.get_data,
+                                 dont_filter=True)  # 爬取城市详情
 
-        have_next = response.xpath('//*[@id="next"]')
-        if have_next:
-            fenlei_url = 'http://baike.baidu.com/fenlei/'
-            next_url = response.xpath('//*[@id="next"]/@href').extract_first()
-            yield scrapy.Request(fenlei_url + str(next_url), callback=self.parse, dont_filter=True)
+        # have_next = response.xpath('//*[@id="next"]')
+        # if have_next:
+        #     fenlei_url = 'http://baike.baidu.com/fenlei/'
+        #     next_url = response.xpath('//*[@id="next"]/@href').extract_first()
+        #     yield scrapy.Request(fenlei_url + str(next_url), callback=self.parse, dont_filter=True)
+
+    def get_data(self, response):
+        item = response.meta['item']._values
+        div = response.xpath('//div[@class="basic-info cmn-clearfix"]')[0]
+        # dts = div.xpath('.//dl/dt')
+        # dds = div.xpath('.//dl/dd')
+        dts = div.xpath('//dt[contains(@class,"basicInfo-item name")]/text()').extract()
+        dds = div.xpath('//dd[contains(@class,"basicInfo-item value")]')
+
+        dic = {}
+        for i, dt in enumerate(dts):
+            # t_dt = dt.xpath('//text()')
+            # key =''.join(t_dt).replace('\n', '').strip()
+            key=''.join(dt.split())
+            value = dds[i].xpath('.//text()|.//a/text()').extract()
+            # t_value = ''.join(value).replace('\n', '').strip()
+            # print(i)
+            # print(dds[i])
+            dic[key] = ''.join(value).replace('\n', '').strip()
+        item['date'] = dic
+        print(dic)
+        yield item
